@@ -48,6 +48,6 @@
 	
 	return $result;
 	}
-	// add_filter( 'wpmu_validate_user_signup', 'tru_ucde' );
+	add_filter( 'wpmu_validate_user_signup', 'tru_ucde' );
 	
 ?>
