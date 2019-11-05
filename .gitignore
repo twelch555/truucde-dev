@@ -1,6 +1,7 @@
 ### Manual adds
 .idea/
 
+
 # Created by .ignore support plugin (hsz.mobi)
 ### MicrosoftOffice template
 *.tmp
@@ -620,3 +621,6 @@ tags
 
 /wpcs/*
 
+/.phpcs.xml.dist
+/.travis.yml
+/phpunit.xml.dist
