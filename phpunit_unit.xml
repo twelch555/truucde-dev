@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<!-- ./vendor/bin/phpunit -c phpunit_unit.xml tests/unitTests -->
+<phpunit
+	bootstrap="tests/unitTests/bootstrap_unit.php"
+	backupGlobals="false"
+	colors="true"
+	convertErrorsToExceptions="true"
+	convertNoticesToExceptions="true"
+	convertWarningsToExceptions="true"
+	>
+	<testsuites>
+		<testsuite name="sample">
+			<directory prefix="test-" suffix=".php">./tests/unitTests/</directory>
+		</testsuite>
+	</testsuites>
+</phpunit>
