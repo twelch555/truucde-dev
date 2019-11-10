@@ -105,7 +105,7 @@ class TruUcde {
 	 *
 	 * @return bool
 	 */
-	private function user_can_add() {
+	public function user_can_add() {
 		if ( is_user_logged_in() && current_user_can( 'promote-users' ) ) {
 			return true;
 		} else {
@@ -122,7 +122,7 @@ class TruUcde {
 	 *
 	 * @return bool
 	 */
-	private function e_needs_processing( $original_error ) {
+	public function e_needs_processing( $original_error ) {
 		if ( is_wp_error( $original_error ) // is an error object.
 			&& ! empty( $original_error->errors ) // and is not empty.
 			&& ( // and contains a black/white list error.
@@ -137,6 +137,5 @@ class TruUcde {
 	}
 
 }
-
-	TruUcde::init();
+TruUcde::init();
 

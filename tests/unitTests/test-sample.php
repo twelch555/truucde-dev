@@ -8,8 +8,19 @@
 /**
  * Sample test case.
  */
-class SampleTest extends WP_UnitTestCase {
-
+class SampleTest extends \WP_Mock\Tools\TestCase {
+	
+	/**
+	 * Test setup
+	 */
+	public function setUp() : void {
+		\WP_Mock::setUp();
+	}
+	
+	public function tearDown() : void {
+		\WP_Mock::tearDown();
+	}
+	
 	/**
 	 * A single example test.
 	 */
