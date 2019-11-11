@@ -22,39 +22,32 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 	/**
-	 * Class TruUcde
-	 * Main plugin class.
-	 */
-class TruUcde {
-
-	/**
 	 * WP_Error Object error code.
 	 *
 	 * @const string $target_error_code
 	 */
-	const TARGET_ERROR_CODE = 'user_email';
+	define("TARGET_ERROR_CODE", "user_email");
 
 	/**
 	 * WP_Error Object message(s) that we are targeting.
 	 *
 	 * @const string $black_list_msg
 	 */
-	const BLACK_LIST_MSG = 'You cannot use that email address to signup. We are having problems with them blocking some of our email. Please use another email provider.';
+	define("BLACK_LIST_MSG", "You cannot use that email address to signup. We are having problems with them blocking some of our email. Please use another email provider.");
 
 	/**
 	 * WP_Error Object message(s) that we are targeting.
 	 *
 	 * @const string $black_list_msg
 	 */
-	const WHITE_LIST_MSG = 'Sorry, that email address is not allowed!';
+	define("WHITE_LIST_MSG", "Sorry, that email address is not allowed!");
 
 	/**
 	 * Hooking into WordPress
 	 */
-	public static function init() {
-		$self = new self();
-		add_filter( 'wpmu_validate_user_signup', array( $self, 'on_loaded' ) );
-	}
+	function truucde_init() {
+		add_filter( 'wpmu_validate_user_signup', 'TruUcde\on_loaded' );
+	};
 
 	/**
 	 * Checks user permission, existence of WP_Error object messages to remove,
@@ -65,7 +58,7 @@ class TruUcde {
 	 *
 	 * @return mixed
 	 */
-	public function on_loaded( $result ) {
+	function on_loaded( $result ) {
 		// get error object from wpmu_validate_user_signup result.
 		$original_error = $result['errors'];
 
@@ -74,18 +67,18 @@ class TruUcde {
 
 		// return original array if auth conditions not met,
 		// or black/white list messages don't exist.
-		if ( ! $this->user_can_add() || ! $this->e_needs_processing( $original_error ) ) {
+		if ( ! user_can_add() || ! e_needs_processing( $original_error ) ) {
 			return $result;
 		}
 
 		// Run through error codes and messages keep all but white/black list errors.
 		foreach ( $original_error->get_error_codes() as $code ) {
 			foreach ( $original_error->get_error_messages( $code ) as $message ) {
-				if ( self::TARGET_ERROR_CODE !== $code ) {
+				if ( TARGET_ERROR_CODE !== $code ) {
 					$new_error->add( $code, $message );
 				} else {
 					// Don't add the white/black list messages.
-					if ( self::BLACK_LIST_MSG !== $message && self::WHITE_LIST_MSG !== $message ) {
+					if ( BLACK_LIST_MSG !== $message && WHITE_LIST_MSG !== $message ) {
 						$new_error->add( $code, $message );
 					}
 				}
@@ -98,14 +91,14 @@ class TruUcde {
 		// Put the new error object back in $result and return.
 		$result['errors'] = $new_error;
 		return $result;
-	}
+	};
 
 	/**
 	 * Tests if the current user is logged in and has admin/super admin privileges.
 	 *
 	 * @return bool
 	 */
-	public function user_can_add() {
+	function user_can_add() {
 		if ( is_user_logged_in() && current_user_can( 'promote-users' ) ) {
 			return true;
 		} else {
@@ -122,12 +115,12 @@ class TruUcde {
 	 *
 	 * @return bool
 	 */
-	public function e_needs_processing( $original_error ) {
+	function e_needs_processing( $original_error ) {
 		if ( is_wp_error( $original_error ) // is an error object.
 			&& ! empty( $original_error->errors ) // and is not empty.
 			&& ( // and contains a black/white list error.
-				in_array( self::BLACK_LIST_MSG, $original_error->get_error_messages( self::TARGET_ERROR_CODE ), true )
-				|| in_array( self::WHITE_LIST_MSG, $original_error->get_error_messages( self::TARGET_ERROR_CODE ), true )
+				in_array( BLACK_LIST_MSG, $original_error->get_error_messages( TARGET_ERROR_CODE ), true )
+				|| in_array( WHITE_LIST_MSG, $original_error->get_error_messages( TARGET_ERROR_CODE ), true )
 			)
 		) {
 			return true;
@@ -136,6 +129,4 @@ class TruUcde {
 		}
 	}
 
-}
-TruUcde::init();
 
