@@ -1,4 +1,8 @@
 <?php
+/*
+ * Thanks goes to CodeTab for these functions:
+ * https://www.codetab.org/tutorial/wordpress-plugin-development/unit-test/scripts-actions-filters/
+ */
 
 class TwTestUtil {
 

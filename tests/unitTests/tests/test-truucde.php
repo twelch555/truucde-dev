@@ -9,11 +9,14 @@ namespace TruUcde;
 require_once 'class-wp-error.php';
 use WP_Error; // need to create empty error objects.
 
-	/**
-	 * TruUcde test case
-	 */
+/**
+ * TruUcde test case
+ */
 class TruUcdeTest extends \WP_Mock\Tools\TestCase {
 	
+	/*
+	 * Define all the things
+	 */
 	public $Target_code = 'user_email';
 	public $Black_msg = 'You cannot use that email address to signup. We are having problems with them blocking some of our email. Please use another email provider.';
 	public $White_msg = 'Sorry, that email address is not allowed!';
